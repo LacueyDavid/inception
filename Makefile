@@ -2,24 +2,23 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-OBJS =																		\
-																																					\
-																																										main.o													\
-																																															PmergeMe.o												\
-																																																																		\
+OBJS =											\
+												\
+							main.o				\
+												\
 
 NAME = PmergeMe
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		$(CXX) -o $(NAME) $^ $(LDFLAGS)
+	$(CXX) -o $(NAME) $^ $(LDFLAGS)
 
 clean:
-		$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-		$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 
