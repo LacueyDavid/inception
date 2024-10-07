@@ -1,10 +1,10 @@
 FROM alpine:3.19
 
-RUN apk update && apk add vim mariadb mariadb-client mariadb-server-utils
+RUN apk update && apk add mariadb mariadb-client mariadb-server-utils
 
 RUN mkdir -p /run/mysqld /var/lib/mysql && chown -R mysql:mysql /run/mysqld /var/lib/mysql
 
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db
 
 COPY conf/my.cnf /etc/my.cnf
 

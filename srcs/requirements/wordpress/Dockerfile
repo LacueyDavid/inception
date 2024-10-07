@@ -1,14 +1,14 @@
 FROM alpine:3.19
 
-RUN apk update && apk add	\
-	    curl		\
-	    mariadb-client	\
-	    php-fpm		\ 
-	    php-mysqli		\
-	    php			\
-	    php-curl		\
-	    php-phar		\
-	    php-mbstring
+RUN apk update && apk add --no-cache	\
+	curl								\
+	mariadb-client						\
+	php-fpm								\
+	php-mysqli							\
+	php									\
+	php-curl							\
+	php-phar							\
+	php-mbstring
 
 RUN mkdir -p /var/www/wordpress /run/php
 
