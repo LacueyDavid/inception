@@ -16,27 +16,29 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
     done
 
     # Créer la config WordPress et installer
-    wp config create                        \
-        --dbname=${MYSQL_DATABASE}          \
-        --dbuser=${MYSQL_USER}              \
-        --dbpass=${MYSQL_PASSWORD}          \
-        --dbhost=${WP_DB_HOST}              \
-        --dbprefix="wp_"                    \
-        --skip-check --force --allow-root
+	wp config create	--dbname=${MYSQL_DATABASE} \
+						--path="/var/www/wordpress" \
+						--dbuser=${MYSQL_USER} \
+						--dbpass=${MYSQL_PASSWORD} \
+						--dbhost=${WP_DB_HOST} \
+						--dbprefix="wp_" \
+						--skip-check \
+						--force \
+						--allow-root \
 
-    wp core install                         \
-        --url=${DOMAIN_NAME}                \
-        --title=${WP_TITLE}                 \
-        --admin_user=${WP_ADMIN}            \
-        --admin_password=${WP_ADMIN_PASSWORD} \
-        --admin_email=${WP_ADMIN_EMAIL}     \
-        --skip-email --allow-root
+	wp core install		--url=${DOMAIN_NAME} \
+						--path="/var/www/wordpress" \
+						--title=${WP_TITLE} \
+						--admin_user=${WP_ADMIN} \
+						--admin_password=${WP_ADMIN_PASSWORD} \
+						--admin_email=${WP_ADMIN_EMAIL} \
+						--skip-email \
+						--allow-root
 
-    # Créer un utilisateur
-    wp user create ${WP_USER} ${WP_USER_EMAIL}  \
-        --role=author                          \
-        --user_pass=${WP_USER_PASSWORD}        \
-        --allow-root
+	wp user create ${WP_USER} ${WP_USER_EMAIL} \
+						--role=author \
+						--user_pass=${WP_USER_PASSWORD} \
+						--allow-root
 fi
 
 # Exécuter la commande passée en argument
