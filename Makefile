@@ -1,10 +1,9 @@
 DOCKER_COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
-DATA_DIRS = /home/dlacuey/data/{mariadb,wordpress}
 
 all: create-dirs check-env up
 
 create-dirs:
-	mkdir -p $(DATA_DIRS)
+	/bin/bash -c 'mkdir -p /home/dlacuey/data/{mariadb,wordpress}'
 
 check-env:
 	@if [ ! -f srcs/.env ];			\
@@ -28,7 +27,7 @@ logs:
 
 clean: 
 	$(DOCKER_COMPOSE) down -v
-	sudo rm -rf /home/dlacuey/data/{mariadb,wordpress}
+	/bin/bash -c 'sudo rm -rf /home/dlacuey/data/{mariadb,wordpress}'
 
 prune: down
 	sudo docker rm -vf $$(sudo docker ps -aq) || true
