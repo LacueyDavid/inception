@@ -1,25 +1,51 @@
-CXX = c++
+DOCKER_COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
+DATA_DIRS = /home/dlacuey/data/{mariadb,wordpress}
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+all: create-dirs check-env up
 
-OBJS =											\
-												\
-							main.o				\
-												\
+create-dirs:
+	mkdir -p $(DATA_DIRS)
 
-NAME = PmergeMe
+check-env:
+	@if [ ! -f srcs/.env ];			\
+	then echo ".env file not found.";	\
+	exit 1;					\
+	fi
 
-all: $(NAME)
+build: create-dirs
+	$(DOCKER_COMPOSE) build
 
-$(NAME): $(OBJS)
-	$(CXX) -o $(NAME) $^ $(LDFLAGS)
+up: 
+	$(DOCKER_COMPOSE) up -d
 
-clean:
-	$(RM) $(OBJS)
+down: 
+	$(DOCKER_COMPOSE) down
 
-fclean: clean
-	$(RM) $(NAME)
+restart: down up
 
-re: fclean all
+logs: 
+	$(DOCKER_COMPOSE) logs
 
-.PHONY: all clean fclean re
+clean: 
+	$(DOCKER_COMPOSE) down -v
+	sudo rm -rf /home/dlacuey/data/{mariadb,wordpress}
+
+prune: down
+	sudo docker rm -vf $$(sudo docker ps -aq) || true
+	sudo docker rmi -f $$(sudo docker images -aq) || true
+	sudo docker network prune -f
+	sudo docker system prune -a -f
+
+status: 
+	$(DOCKER_COMPOSE) ps
+
+# Container shell access
+shell-nginx: 
+	$(DOCKER_COMPOSE) exec nginx /bin/sh
+shell-wordpress: 
+	$(DOCKER_COMPOSE) exec wordpress /bin/sh
+shell-mariadb: 
+	$(DOCKER_COMPOSE) exec mariadb /bin/sh
+
+.PHONY: all create-dirs check-env build up down restart logs clean prune status \
+shell-nginx shell-wordpress shell-mariadb
