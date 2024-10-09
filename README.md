@@ -1,6 +1,6 @@
 # School project with docker, nginx, mariadb and wordpress
 
-**_Exemple de .env:_**
+**Exemple de .env:**
 
 - MYSQL_DATABASE=mysql_inception_database
 - MYSQL_USER=mysql_user
@@ -16,4 +16,4 @@
 - DOMAIN_NAME=my_server.fr
 - MYSQL_ROOT_PASSWORD=root_password
 
-Ajouter dans **_/etc/hosts_** le nom de domaine : **_127.0.0.1 my_server.fr_**
+Ajouter dans **/etc/hosts** le nom de domaine : **127.0.0.1 my_server.fr**
