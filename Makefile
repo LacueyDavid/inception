@@ -3,7 +3,7 @@ DOCKER_COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
 all: create-dirs check-env up
 
 create-dirs:
-	/bin/bash -c 'mkdir -p /home/dlacuey/data/{mariadb,wordpress}'
+	sudo /bin/bash -c 'mkdir -p /home/dlacuey/data/{mariadb,wordpress}'
 
 check-env:
 	@if [ ! -f srcs/.env ];			\
@@ -34,6 +34,7 @@ prune: down
 	sudo docker rmi -f $$(sudo docker images -aq) || true
 	sudo docker network prune -f
 	sudo docker system prune -a -f
+	sudo rm -rf /home/dlacuey/data
 
 status: 
 	$(DOCKER_COMPOSE) ps
