@@ -1,0 +1,28 @@
+probleme:
+Se retrouver à créer un super programme sur son ordinateur, et se rendre compte
+qu’il ne fonctionne que sur son propre ordinateur.
+Pour l’utiliser ailleurs il
+va falloir installer les dépendances requises
+
+solution: Docker
+
+Les types de problèmes que corrige Docker:
+- Une dépendance n’est pas compatible avec votre version de logiciel
+- Vous possédez déjà la dépendance mais dans une version différente
+- Votre dépendance n’existe pas sur votre OS
+- Votre dépendance crash au lancement
+
+commandes docker :
+
+- creer une image	: docker build -t nameOfImage PathToDirectory
+
+- voir les images	: docker image ls
+
+- run une image		: docker run imageName ou imageId
+(-it avant imageName pour acceder au terminal du container)
+
+- lister les containers en cours d'execution : docker ps
+
+- lister les containers : docker ps -a
+
+
