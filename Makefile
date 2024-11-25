@@ -3,7 +3,7 @@ DOCKER_COMPOSE = sudo docker-compose -f srcs/docker-compose.yml
 all: create-dirs check-env up
 
 create-dirs:
-	sudo /bin/bash -c 'mkdir -p /home/dlacuey/data/{mariadb,wordpress}'
+	sudo bash -c 'mkdir -p /home/dlacuey/data/{mariadb,wordpress}'
 
 check-env:
 	@if [ ! -f srcs/.env ];			\
@@ -22,12 +22,12 @@ down:
 
 restart: down up
 
-logs: 
+logs:
 	$(DOCKER_COMPOSE) logs
 
-clean: 
+clean:
 	$(DOCKER_COMPOSE) down -v
-	/bin/bash -c 'sudo rm -rf /home/dlacuey/data/{mariadb,wordpress}'
+	sudo /bin/bash -c 'sudo rm -rf /home/dlacuey/data'
 
 prune: down
 	sudo docker rm -vf $$(sudo docker ps -aq) || true
@@ -40,11 +40,11 @@ status:
 	$(DOCKER_COMPOSE) ps
 
 # Container shell access
-shell-nginx: 
+shell-nginx:
 	$(DOCKER_COMPOSE) exec nginx /bin/sh
-shell-wordpress: 
+shell-wordpress:
 	$(DOCKER_COMPOSE) exec wordpress /bin/sh
-shell-mariadb: 
+shell-mariadb:
 	$(DOCKER_COMPOSE) exec mariadb /bin/sh
 
 .PHONY: all create-dirs check-env build up down restart logs clean prune status \
